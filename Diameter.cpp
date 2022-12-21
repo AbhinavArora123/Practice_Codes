@@ -1,0 +1,69 @@
+#include<iostream>
+#include<queue>
+#include<stack>
+using namespace std;
+
+class node{
+    public:
+    int data;
+    node* left;
+    node* right;
+
+    node(int data){
+        this->data=data;
+        this->left=NULL;
+        this->right=NULL;
+    }
+};
+
+node* buildTree(node* root){
+    cout<<"Enter node data:" <<endl;
+    int data;
+    cin>>data;
+    root=new node(data);
+
+    if(data==-1){
+        return NULL;
+    }
+
+    cout<<"Enter data to the left of "<<data<<endl;
+    root->left=buildTree(root->left);
+    cout<<"Enter data to the right of "<<data<<endl;
+    root->right=buildTree(root->right);
+    return root;
+}
+
+int height(node* root){
+    if(root==NULL){
+        return 0;
+    }
+
+    int left1=height(root->left);
+    int right1=height(root->right);
+
+    int ans=max(left1,right1)+1;
+    return ans;
+}
+
+int diameter(node* root){
+    if(root==NULL){
+        return 0;
+    }
+
+    int op1=diameter(root->left);
+    int op2=diameter(root->right);
+    int op3=height(root->left)+height(root->right)+1;
+
+    int ans=max(op1,max(op2,op3));
+    return ans;
+}
+
+int main(){
+    node* root=buildTree(root);
+    
+    // int val=height(root);
+    int val=diameter(root);
+    cout<<val<<endl;
+    return 0;
+}
+
